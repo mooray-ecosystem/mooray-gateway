@@ -19,9 +19,9 @@ public class MemberController {
     private final MemberService memberService;
 
     // FIXME: index 페이지
-    @GetMapping("/")
+    @GetMapping("/signup")
     public String goSignUpForm() {
-        return "members/sign-up-form";
+        return "auth/sign-up-form";
     }
 
     @PostMapping("/signup")
@@ -29,7 +29,7 @@ public class MemberController {
                                  BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("members/sign-up-form");
+            return new ModelAndView("auth/sign-up-form");
         }
 
         ModelAndView mav = new ModelAndView("redirect:/auth/login");
@@ -38,6 +38,11 @@ public class MemberController {
         mav.addObject("response", response);
 
         return mav;
+    }
+
+    @GetMapping("/login")
+    public String goLoginForm() {
+        return "auth/sign-in-form";
     }
 
 }
