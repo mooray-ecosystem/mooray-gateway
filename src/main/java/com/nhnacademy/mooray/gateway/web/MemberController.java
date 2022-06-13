@@ -1,6 +1,6 @@
 package com.nhnacademy.mooray.gateway.web;
 
-import com.nhnacademy.mooray.gateway.dto.MemberJoinRequest;
+import com.nhnacademy.mooray.gateway.dto.MemberSignUpRequest;
 import com.nhnacademy.mooray.gateway.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ModelAndView doSignUp(@Valid @ModelAttribute MemberJoinRequest memberJoinRequest,
+    public ModelAndView doSignUp(@Valid @ModelAttribute MemberSignUpRequest memberRequest,
                                  BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -33,15 +33,20 @@ public class MemberController {
 
         ModelAndView mav = new ModelAndView("redirect:/auth/login");
 
-        String response = memberService.signUp(memberJoinRequest);
+        String response = memberService.signUp(memberRequest);
         mav.addObject("response", response);
 
         return mav;
     }
 
-    @PostMapping("/login")
+    @GetMapping("/auth/login")
     public String goLoginForm() {
         return "auth/sign-in-form";
+    }
+
+    @GetMapping("/members/logout")
+    public String goLogout() {
+        return "auth/logout";
     }
 
 }

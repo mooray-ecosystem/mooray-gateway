@@ -1,0 +1,23 @@
+package com.nhnacademy.mooray.gateway.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+// NOTE: 비밀번호 인코딩 처리를 위함
+@Getter
+public class MemberSignUpRequest {
+
+    private final String username;
+    private final String password;
+    private final String emailAddress;
+    private final String authority;
+
+    public static MemberSignUpRequest polish(MemberSignUpRequest memberRequest, String hashedPassword) {
+        return new MemberSignUpRequest(memberRequest.username,
+                                       hashedPassword,
+                                       memberRequest.emailAddress,
+                                       memberRequest.getAuthority());
+    }
+
+}
