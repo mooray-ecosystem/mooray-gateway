@@ -18,7 +18,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // FIXME: index 페이지
     @GetMapping("/signup")
     public String goSignUpForm() {
         return "auth/sign-up-form";
@@ -40,9 +39,9 @@ public class MemberController {
         return mav;
     }
 
-    @GetMapping("/login")
-    public String goLoginForm() {
-        return "auth/sign-in-form";
-    }
+    // @GetMapping("/login")
+    // public String goLoginForm() {
+    //     return "auth/sign-in-form";
+    // }
 
 }

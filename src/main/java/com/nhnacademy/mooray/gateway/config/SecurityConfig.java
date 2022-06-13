@@ -17,11 +17,13 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+// TODO #3: @EnableWebSecurity
 @EnableWebSecurity(debug = true)
 // @EnableGlobalMethodSecurity(prePostEnabled = true, order = 1)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // TODO #4: WebSecurityConfigurerAdapter 메서드 protected, HttpSecurity http 이거 재정의
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -34,13 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .loginPage("/login")
+                // /auth/sign-in-form
+                // .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .successHandler(loginSuccessHandler())
             .and()
+            // OAUTH2 #2:
             .oauth2Login()
-                .clientRegistrationRepository(this.clientRegistrationRepository())
                 .authorizedClientService(this.authorizedClientService())
+                .clientRegistrationRepository(this.clientRegistrationRepository())
             .and();
     }
 
