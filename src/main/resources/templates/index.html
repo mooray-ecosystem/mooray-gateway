@@ -13,7 +13,9 @@
         <th:block th:include="includes/header"></th:block>
         <main>
             <a href="/signup">회원가입</a>
-            <a href="/login">로그인</a>
+            <form method="post" action="/login">
+                <button type="submit">로그인</button>
+            </form>
         </main>
     </body>
 </html>

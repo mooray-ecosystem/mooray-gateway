@@ -13,12 +13,18 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 0.2rem);
+    height: calc(100vh - 20rem);
     margin: 0.5rem;
 }
 
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 a {
-    color: #222;
     text-decoration: none;
 }
 
@@ -29,4 +35,8 @@ input {
 
 button {
     margin: 0.5rem;
+}
+
+h1 {
+    color: #222;
 }
