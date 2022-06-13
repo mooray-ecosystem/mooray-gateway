@@ -4,6 +4,6 @@ import com.nhnacademy.mooray.gateway.dto.MemberJoinRequest;
 
 public interface MemberService {
 
-    String signUp(MemberJoinRequest memberJoinRequest);
+    String signUp(MemberJoinRequest memberRequest);
 
 }
