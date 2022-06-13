@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>NHN Board</title>
+        <link th:href="@{/styles/global-style.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <th:block th:include="includes/header"></th:block>
+        <main>
+            <section>
+                <form method="post" action="/users">
+                    <input type="text" name="username" placeholder="아이디">
+                    <br>
+                    <input type="password" name="password" placeholder="비밀번호">
+                    <br>
+                    <button type="submit">로그인</button>
+                </form>
+            </section>
+            <section>
+                <a href="https://github.com/login/oauth/authorize?client_id=8489289d0e3d656ad6f2&redirect_uri=http://localhost:8080/login/oauth2/code/github"
+                   class="btn btn-primary pull-right" role="button">깃허브로 로그인</a>
+            </section>
+        </main>
+    </body>
+</html>

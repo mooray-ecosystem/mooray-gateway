@@ -1,18 +1,21 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http//thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Mooray | 메인</title>
+        <title>Mooray | 회원가입</title>
         <link th:href="@{/styles/global-style.css}" rel="stylesheet" />
     </head>
     <body>
         <th:block th:include="includes/header"></th:block>
         <main>
-            <a href="/signup">회원가입</a>
-            <a href="/login">로그인</a>
+            <form method="post" action="login">
+                ID : <input type="text" name="username"><br>
+                PW : <input type="password" name="password"><br>
+                <input type="submit" value="회원가입">
+            </form>
         </main>
     </body>
 </html>
