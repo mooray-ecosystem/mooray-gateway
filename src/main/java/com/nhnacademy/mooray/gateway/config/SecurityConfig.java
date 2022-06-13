@@ -36,10 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                // /auth/sign-in-form
-                // .loginPage("/login")
+                .loginPage("/auth/login")
                 .loginProcessingUrl("/login")
                 .successHandler(loginSuccessHandler())
+            .and()
+            .logout()
+                .logoutSuccessUrl("/auth/login")
             .and()
             // OAUTH2 #2:
             .oauth2Login()

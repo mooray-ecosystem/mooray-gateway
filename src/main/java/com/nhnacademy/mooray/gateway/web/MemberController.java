@@ -39,9 +39,9 @@ public class MemberController {
         return mav;
     }
 
-    // @GetMapping("/login")
-    // public String goLoginForm() {
-    //     return "auth/sign-in-form";
-    // }
+    @PostMapping("/login")
+    public String goLoginForm() {
+        return "auth/sign-in-form";
+    }
 
 }
