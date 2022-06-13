@@ -21,7 +21,7 @@ public class MemberController {
     // FIXME: index 페이지
     @GetMapping("/")
     public String goSignUpForm() {
-        return "members/form";
+        return "members/sign-up-form";
     }
 
     @PostMapping("/signup")
