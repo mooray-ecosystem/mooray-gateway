@@ -51,6 +51,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+
+        <!-- @EnableRedisHttpSession -->
+        <!-- <dependency> -->
+        <!--     <groupId>org.springframework.session</groupId> -->
+        <!--     <artifactId>spring-session-data-redis</artifactId> -->
+        <!-- </dependency> -->
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
