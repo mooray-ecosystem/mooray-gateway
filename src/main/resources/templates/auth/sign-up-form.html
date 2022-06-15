@@ -12,8 +12,9 @@
         <th:block th:include="includes/header"></th:block>
         <main>
             <form method="post" action="/signup">
-                ID : <input type="text" name="username"><br>
-                PW : <input type="password" name="password"><br>
+                <input type="text" name="username" placeholder="아이디"><br>
+                <input type="email" name="email" placeholder="이메일"><br>
+                <input type="password" name="password" placeholder="비밀번호"><br>
                 <input type="submit" value="회원가입">
             </form>
         </main>

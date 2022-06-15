@@ -1,7 +1,8 @@
-package com.nhnacademy.mooray.gateway.service;
+package com.nhnacademy.mooray.gateway.service.account;
 
-import com.nhnacademy.mooray.gateway.dto.MemberJoinRequest;
-import com.nhnacademy.mooray.gateway.repository.MemberRepository;
+import com.nhnacademy.mooray.gateway.dto.account.MemberJoinRequest;
+import com.nhnacademy.mooray.gateway.dto.account.MemberLoginRequest;
+import com.nhnacademy.mooray.gateway.repository.account.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,11 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.signUp(polishedMemberRequest);
     }
 
+    @Override
+    public String login(MemberLoginRequest memberRequest) {
+        boolean matches = passwordEncoder.matches(memberRequest.getPassword(),
+                                                  passwordEncoder.encode(memberRequest.getPassword()));
+        return memberRepository.login(memberRequest);
+    }
 
 }

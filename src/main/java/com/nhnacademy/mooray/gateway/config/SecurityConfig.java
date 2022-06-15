@@ -1,12 +1,13 @@
 package com.nhnacademy.mooray.gateway.config;
 
 import com.nhnacademy.mooray.gateway.auth.LoginSuccessHandler;
+import com.nhnacademy.mooray.gateway.service.account.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,38 +16,61 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-// TODO #3: @EnableWebSecurity
 @EnableWebSecurity(debug = true)
-// @EnableGlobalMethodSecurity(prePostEnabled = true, order = 1)
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    // TODO #4: WebSecurityConfigurerAdapter 메서드 protected, HttpSecurity http 이거 재정의
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/private-project/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
-                .antMatchers("/project/**").authenticated()
-                .antMatchers("/redirect-index").authenticated()
-                .antMatchers("/auth/sign-in-form").permitAll()
-            .and()
-            .formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                // /auth/sign-in-form
-                // .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .successHandler(loginSuccessHandler())
-            .and()
-            // OAUTH2 #2:
-            .oauth2Login()
-                .authorizedClientService(this.authorizedClientService())
-                .clientRegistrationRepository(this.clientRegistrationRepository())
+            .antMatchers("/", "/login")
+            .authenticated()
+            .anyRequest().permitAll()
             .and();
+
+        http.formLogin()
+            .successHandler(loginSuccessHandler())
+            .loginPage("/login")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .loginProcessingUrl("/login")
+            .permitAll()
+            .and();
+
+        http.logout()
+            .logoutUrl("/logout")
+            .and();
+
+        http.csrf()
+            .disable();
+
+        http.headers()
+            .frameOptions()
+            .sameOrigin();
+
+        // http.oauth2Login()
+        //         .authorizedClientService(this.authorizedClientService())
+        //         .clientRegistrationRepository(this.clientRegistrationRepository())
+        //     .and();
+
+        return http.build();
     }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(CustomUserDetailsService customUserDetailsService) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(customUserDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+
+        return authenticationProvider;
+    }
+
+    // 권한 설정 (인증 제외)
+    // WebSecurityCustomizer
 
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService() {
@@ -62,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return CommonOAuth2Provider.GITHUB.getBuilder("github")
                                           .clientId("4376b3d3f49b706aaf49")
                                           .clientSecret("a835d36072f8a991059a8b6061f409359d3e6ecc")
+                                          .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                                           .build();
     }
 
@@ -69,11 +94,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler();
     }
-
-    // @Bean
-    // public AuthenticationSuccessHandler loginSuccessHandler(RedisTemplate<String, String> redisTemplate) {
-    //     return new LoginSuccessHandler(redisTemplate);
-    // }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

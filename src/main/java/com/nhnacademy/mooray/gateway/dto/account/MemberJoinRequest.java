@@ -1,4 +1,4 @@
-package com.nhnacademy.mooray.gateway.dto;
+package com.nhnacademy.mooray.gateway.dto.account;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

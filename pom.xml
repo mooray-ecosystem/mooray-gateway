@@ -23,13 +23,11 @@
     </properties>
 
     <dependencies>
-        <!-- TODO #1: -web 접미어 붙이기 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- TODO #1: -security 의존 라이브러리 추가 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -40,8 +38,6 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- NOTE: 의존성 없으면 뷰 안 띄워진다!!! -->
-        <!-- TODO #1: thymeleaf 의존 라이브러리 추가 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -59,13 +55,6 @@
             <artifactId>spring-security-oauth2-client</artifactId>
         </dependency>
 
-        <!-- @EnableRedisHttpSession -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.springframework.session</groupId> -->
-        <!--     <artifactId>spring-session-data-redis</artifactId> -->
-        <!-- </dependency> -->
-
-        <!-- TODO #1: Cmd + F9 하면 톰캣 재시작 없이 바로 빌드되고 새로고침하면 됨 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -92,6 +81,26 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
